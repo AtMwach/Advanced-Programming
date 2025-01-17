@@ -1,25 +1,16 @@
 package Lecture4_interfaces_abstract_classes;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 
-// TransactionInterface should be defined elsewhere
-public class BaseTransaction implements TransactionInterface {
-    private final int amount;
+public abstract class BaseTransaction implements TransactionInterface {
+    private final double amount;
     private final Calendar date;
     private final String transactionID;
 
-    /**
-     * Constructor
-     *
-     * @param amount The transaction amount
-     * @param date   The transaction date (must not be null)
-     */
-    public BaseTransaction(int amount, @NotNull Calendar date) {
+    public BaseTransaction(double amount, Calendar date, String transactionID) {
         this.amount = amount;
-        this.date = (Calendar) date.clone();
-        int uniq = (int) (Math.random() * 10000); // Ensure correct random generation
-        transactionID = date.toString() + uniq;
+        this.date = (Calendar) date.clone(); // Defensive copying
+        this.transactionID = transactionID;
     }
 
     @Override
@@ -37,7 +28,6 @@ public class BaseTransaction implements TransactionInterface {
         return transactionID;
     }
 
-    // Added concrete implementation
     @Override
     public void printTransactionDetails() {
         System.out.println("Transaction ID: " + transactionID);
@@ -45,10 +35,9 @@ public class BaseTransaction implements TransactionInterface {
         System.out.println("Date: " + date.getTime());
     }
 
-    // Base implementation of the apply method
     @Override
-    public void apply(BankAccount ba) {
-        System.out.println("BaseTransaction applied on BankAccount.");
-        // Placeholder logic for applying a transaction
+    public abstract void apply(BankAccount ba);
 
+    @Override
+    public abstract boolean reverse(BankAccount ba);
 }
