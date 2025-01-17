@@ -1,47 +1,38 @@
 package Lecture2_adt_specification;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Calendar;
-//import java.util.Date;
 
 /**
- * In Addition to the Design considerations in Transaction4 class:
- * This class adds Specifications defining the Requires and Produces interfaces
+ * This Lecture2_adt_specification.Transaction4 class extends the design considerations of the previous Transaction4 class.
+ * It adds specifications for the requires and produces interfaces.
  */
-
 public class Transaction4 {
     private final int amount;
     private final Calendar date;
 
     /**
-     * Lecture1_adt.TransactionInterface Constructor
-     * @param amount in an integer
-     * @param date: Not null, and must be a Calendar object
-     * @return void
-     * Instialises the field, attributes of a transaction
-     * Creates a object of this
+     * Constructor for Transaction4
+     * @param amount the transaction amount (must be an integer)
+     * @param date the transaction date (must be a Calendar object and not null)
      */
-    public Transaction4(int amount, @NotNull Calendar date) {
+    public Transaction4(int amount, Calendar date) {
         this.amount = amount;
-        this.date = (Calendar) date.clone();
+        this.date = (Calendar) date.clone(); // Defensive copying ensures input reference is not shared
     }
 
-
     /**
-     * getAmount()
-     * @return integer
+     * Retrieves the transaction amount.
+     * @return an integer representing the amount
      */
     public int getAmount() {
-        return amount; // Because we are dealing with Value types we need not worry about what we return
+        return amount; // Value types like integers can be returned directly
     }
 
     /**
-     * getDate()
-     * @return Calendar Object
+     * Retrieves the transaction date.
+     * @return a Calendar object representing the transaction date
      */
     public Calendar getDate() {
-//        return date;    // Because we are dealing with Reference types we need to judiciously copy what our getters return
-        return (Calendar) date.clone(); // Defensive copying or Judicious Copying
+        return (Calendar) date.clone(); // Defensive copying ensures reference types are not altered externally
     }
 }
